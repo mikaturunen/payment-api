@@ -5,3 +5,5 @@ src/**/*.js
 *.tfstate
 *.tfstate.backup
 .terraform
+.swagger-codegen-ignore
+.swagger-codegen
