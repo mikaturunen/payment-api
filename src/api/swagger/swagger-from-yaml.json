@@ -14,7 +14,6 @@
       "url" : "https://opensource.org/licenses/MIT"
     }
   },
-  "host" : "localhost:3002",
   "basePath" : "/",
   "schemes" : [ "http", "https" ],
   "consumes" : [ "application/json" ],
