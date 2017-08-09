@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm run compile && npm run copy-static",
     "compile": "tsc -p tsconfig.json",
-    "copy-static": "cpx --clean -v \"src/**/*.{yaml,json}\" build",
+    "copy-static": "cpx --clean --verbose 'src/**/*.{yaml,json}' build",
     "start": "node build/app.js"
   },
   "author": "Mika Turunen",
