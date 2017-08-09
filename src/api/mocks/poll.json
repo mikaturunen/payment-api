@@ -1,0 +1,10 @@
+{
+  "merchantId": "375917",
+  "poll": {
+    "stamp": "100",
+    "reference": "100",
+    "amount": 100,
+    "currency": "EUR"
+  },
+  "hmac": "calculate me, thanks - tests do it, if you need example"
+}

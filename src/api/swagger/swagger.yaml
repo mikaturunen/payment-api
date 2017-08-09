@@ -1,0 +1,369 @@
+swagger: "2.0"
+
+info:
+  version: "0.0.1"
+  title: Ecommerce API
+  description: Simple API for making, refunding and tracking payments and their statuses for different commercial business needs.
+  contact:
+    name: API support
+    url: http://mikaturunen.eu
+    email: mika.turunen@ymail.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+# during dev, should point to your local machine
+host: localhost:3002
+# basePath prefixes all resource paths
+basePath: /
+#
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+
+consumes:
+  - application/json
+produces:
+  - application/json
+
+
+paths:
+  /swagger:
+    x-swagger-pipe: swagger_raw
+
+  /v1/payment/open/single:
+    x-swagger-router-controller: v1/payment
+    post:
+      description: Creates a single open payment. Response is a fully functional payment wall JSON. Iterate over the response and render the buttons and create valid HTML from it.
+      operationId: openPayment
+      parameters:
+        - in: body
+          name: OpenPayment
+          required: true
+          schema:
+            $ref: "#/definitions/BodyOpenPayment"
+      responses:
+        "200":
+          description: Success
+
+  /v1/payment/open/shop-in-shop:
+    x-swagger-router-controller: v1/payment-shop-in-shop
+    post:
+      description: Creates a single open shop-in-shop payment. Response is a fully functional payment wall JSON. Iterate over the response and render the buttons and create valid HTML from it.
+      operationId: openPayment
+      parameters:
+        - in: body
+          name: OpenPaymentShopInShop
+          required: true
+          schema:
+            $ref: "#/definitions/BodyOpenPayment"
+      responses:
+        "200":
+          description: Success
+
+  /v1/payment/poll/single:
+    x-swagger-router-controller: v1/poll
+    post:
+      description: Polls the payment status for given payment.
+      operationId: pollPayment
+      parameters:
+        - in: body
+          name: pollPayment
+          required: true
+          schema:
+            $ref: "#/definitions/BodyPollPayment"
+      responses:
+        "200":
+          description: Success
+
+  /v1/payment/poll/shop-in-shop:
+    x-swagger-router-controller: v1/poll
+    post:
+      description: Polls the payment status for given payment.
+      operationId: pollPaymentShopInShop
+      parameters:
+        - in: body
+          name: pollPaymentShopInShop
+          required: true
+          schema:
+            $ref: "#/definitions/BodyPollPayment"
+      responses:
+        "200":
+          description: Success
+
+  /v1/payment/refund:
+    x-swagger-router-controller: v1/refund
+    post:
+      description: Refunds a given item from a payment. Can also refund the whole payment.
+      operationId: refundPayment
+      parameters:
+        - in: body
+          name: RefundPayment
+          required: true
+          schema:
+            $ref: "#/definitions/BodyRefundPayment"
+      responses:
+        "200":
+          description: Success
+
+# complex objects have schema definitions
+definitions:
+  BodyOpenPayment:
+    type: object
+    required:
+      - hmac
+      - merchantId
+      - payment
+    properties:
+      merchantId:
+        type: string
+        example: 375917
+      hmac:
+        type: string
+        minLength: 10
+      payment:
+        type: object
+        $ref: "#/definitions/OpenPayment"
+
+  BodyRefundPayment:
+    type: object
+    required:
+      - merchantId
+      - stamp
+      - payment
+      - hmac
+    properties:
+      merchantId:
+        type: string
+        example: 375917
+      stamp:
+        type: string
+        example: '1233214'
+      hmac:
+        type: string
+        minLength: 10
+      payment:
+        type: object
+        required:
+          - stamp
+          - reference
+          - amount
+          - receiver
+        properties:
+          stamp:
+            type: string
+          reference:
+            type: string
+          amount:
+            type: integer
+            format: int32
+            minimum: 100
+          receiver:
+            type: object
+            required:
+              - email
+            properties:
+              email:
+                type: string
+
+  BodyPollPayment:
+    type: object
+    required:
+      - merchantId
+      - poll
+      - hmac
+    properties:
+      merchantId:
+        type: string
+        example: 375917
+      hmac:
+        type: string
+        minLength: 10
+      poll:
+        type: object
+        required:
+          - stamp
+          - reference
+          - amount
+          - currency
+        properties:
+          stamp:
+            type: string
+            example: '1233214'
+          reference:
+            type: string
+          amount:
+            type: integer
+            format: int32
+            minimum: 100
+          currency:
+            type: string
+            example: 'EUR'
+
+
+  OpenPayment:
+    required:
+      - totalAmount
+      - currency
+      - reference
+      - stamp
+      - items
+      - content
+      - country
+      - language
+      - message
+      - delivery
+      - customer
+      - redirect
+    properties:
+      merchantId:
+        type: string
+      totalAmount:
+        type: integer
+        format: int32
+        minimum: 100
+      currency:
+        type: string
+      reference:
+        type: string
+      stamp:
+        type: string
+      items:
+        type: array
+        items:
+          minItems: 1
+          $ref: "#/definitions/PaymentItem"
+      delivery:
+        $ref: "#/definitions/DeliveryAddress"
+      content:
+        type: number
+      country:
+        type: string
+      language:
+        type: string
+      message:
+        type: string
+        minLength: 0
+      customer:
+        $ref: "#/definitions/MerchantCustomer"
+      redirect:
+        $ref: "#/definitions/RedirectControl"
+    #example:
+    #  $ref: "../mocks/payment.json"
+
+  PaymentItem:
+    required:
+      - reference
+      - stamp
+      - amount
+      - merchant
+      - description
+      - categoryCode
+      - deliveryDate
+      - vatPercentage
+    properties:
+      reference:
+        type: string
+      stamp:
+        type: string
+      amount:
+        type: integer
+        format: int32
+      merchant:
+        type: object
+        $ref: "#/definitions/Merchant"
+      description:
+        type: string
+        maxLength: 150
+        minLength: 0
+      categoryCode:
+        type: string
+        maxLength: 20
+        minLength: 1
+      deliveryDate:
+        type: string
+        maxLength: 10
+        minLength: 8
+      vatPercentage:
+        type: integer
+        format: int32
+        maximum: 100
+        minimum: 0
+
+  RedirectControl:
+    required:
+      - return
+      - delayed
+      - cancel
+      - reject
+    properties:
+      return:
+        type: string
+      delayed:
+        type: string
+      cancel:
+        type: string
+      reject:
+        type: string
+
+  MerchantCustomer:
+    required:
+      - firstName
+      - lastName
+      - email
+    properties:
+      firstName:
+        type: string
+        minLength: 2
+        maxLength: 100
+      lastName:
+        type: string
+        minLength: 2
+        maxLength: 100
+      email:
+        type: string
+
+  Merchant:
+    required:
+      - id
+      - name
+      - email
+      - vatId
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+        maxLength: 45
+      email:
+        type: string
+      vatId:
+        type: string
+
+  DeliveryAddress:
+    required:
+      - postalCode
+      - city
+      - country
+      - county
+      - streetAddress
+    properties:
+      postalCode:
+        type: string
+        maxLength: 10
+        minLength: 2
+      city:
+        type: string
+        maxLength: 20
+      country:
+        type: string
+        maxLength: 20
+        minLength: 2
+      county:
+        type: string
+        maxLength: 40
+      streetAddress:
+        type: string
+        maxLength: 100
+        minLength: 5

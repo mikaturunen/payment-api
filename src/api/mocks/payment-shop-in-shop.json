@@ -1,0 +1,47 @@
+{
+  "merchantId": "375917",
+  "hmac": "calculate me, thanks - tests do it, if you need example",
+  "payment": {
+    "totalAmount": 1000,
+    "reference": "string",
+    "stamp": "string",
+    "items": [{
+      "reference": "12344",
+      "stamp": "11111111",
+      "amount": 1000,
+      "description": "",
+      "categoryCode": "12332",
+      "deliveryDate": "20170602",
+      "vatPercentage": 23,
+      "merchant": {
+        "id": "391830",
+        "name": "foobar",
+        "email": "shop@testing.com",
+        "vatId": "23"
+      }
+    }],
+    "content": 1,
+    "language": "FI",
+    "country": "FIN",
+    "currency": "EUR",
+    "message": "",
+    "customer": {
+      "firstName": "Keijo",
+      "lastName": "Romanof",
+      "email": "matti@couch.io"
+    },
+    "redirect": {
+      "return":  "http://demo1.checkout.fi/xml2.php?test=1",
+      "cancel":  "http://demo1.checkout.fi/xml2.php?test=2",
+      "reject":  "http://demo1.checkout.fi/xml2.php?test=3",
+      "delayed": "http://demo1.checkout.fi/xml2.php?test=4"
+    },
+    "delivery": {
+      "postalCode": "00100",
+      "streetAddress": "Katutie 12",
+      "city": "Helsinki",
+      "country": "Finland",
+      "county": "Uusimaa"
+    }
+  }
+}

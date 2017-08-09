@@ -1,0 +1,13 @@
+{
+  "merchantId": "375917",
+  "hmac": "calculate me, thanks - tests do it, if you need example",
+  "stamp": "11111112",
+  "payment": {
+    "stamp": "11111111",
+    "reference": "12344",
+    "amount": 1000,
+    "receiver": {
+      "email": "matti@couch.io"
+    }
+  }
+}
