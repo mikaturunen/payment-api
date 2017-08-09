@@ -7,7 +7,7 @@
     "build": "npm run compile && npm run copy-static",
     "compile": "./node_modules/.bin/tsc -p tsconfig.json",
     "copy-static": "./node_modules/cpx/bin/index.js --clean --verbose 'src/**/*.{yaml,json}' build ",
-    "start": "node build/app.js"
+    "start": "node ./build/app.js"
   },
   "author": "Mika Turunen",
   "license": "MIT",
