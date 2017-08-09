@@ -7,8 +7,7 @@
     "build": "npm run compile && npm run copy-static",
     "compile": "./node_modules/.bin/tsc -p tsconfig.json",
     "copy-static": "./node_modules/cpx/bin/index.js --clean --verbose 'src/**/*.{yaml,json}' build ",
-    "start": "node build/app.js",
-    "postinstall": "npm run build"
+    "start": "node build/app.js"
   },
   "author": "Mika Turunen",
   "license": "MIT",
@@ -20,6 +19,7 @@
     "locutus": "^2.0.9",
     "ramda": "^0.24.1",
     "swagger-express-mw": "^0.7.0",
+    "tsc": "^1.20150623.0",
     "unirest": "^0.5.1",
     "xml2js": "^0.4.17",
     "yaml-loader": "^0.5.0"

@@ -20,7 +20,7 @@ const config = {
   appRoot: __dirname // required config
 };
 
-const port = process.env['SERVER_PORT'] ? process.env['SERVER_PORT'] : 3002
+const port = process.env['PORT'] ? process.env['PORT'] : 3002
 const log = bunyan.createLogger({ name: 'api' })
 const app = express()
 const IN_PRODUCTION = 'production'
