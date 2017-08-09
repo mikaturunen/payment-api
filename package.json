@@ -5,9 +5,10 @@
   "main": "build/app.js",
   "scripts": {
     "build": "npm run compile && npm run copy-static",
-    "compile": "tsc -p tsconfig.json",
-    "copy-static": "cpx --clean --verbose 'src/**/*.{yaml,json}' build",
-    "start": "node build/app.js"
+    "compile": "./node_modules/.bin/tsc -p tsconfig.json",
+    "copy-static": "./node_modules/cpx/bin/index.js --clean --verbose 'src/**/*.{yaml,json}' build ",
+    "start": "node build/app.js",
+    "postinstall": "npm run build"
   },
   "author": "Mika Turunen",
   "license": "MIT",
