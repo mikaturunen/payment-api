@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm run compile && npm run copy-static",
     "compile": "node node_modules/typescript/bin/tsc -p tsconfig.json",
-    "copy-static": "node node_modules/cpx/bin/index.js --clean -v \"src/**/*.{yaml,json}\" build",
+    "copy-static": "cpx --clean -v \"src/**/*.{yaml,json}\" build",
     "postinstall": "npm run build",
     "start": "node build/app.js"
   },
