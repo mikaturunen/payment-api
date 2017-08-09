@@ -6,7 +6,7 @@ provider "heroku" {
 }
 
 # Define the actual infrastructure the application runs on
-resource "heroku_app" "production" {
+resource "heroku_app" "default" {
   name    = "payments-api"
   region  = "eu"
 
