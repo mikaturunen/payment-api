@@ -2,5 +2,6 @@ build/
 typings/
 node_modules
 src/**/*.js
-**/*.tfstate
-**/*.tfstatebackup
+*.tfstate
+*.tfstatebackup
+.terraform
