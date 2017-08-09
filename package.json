@@ -4,7 +4,7 @@
   "description": "Tasker project",
   "main": "build/app.js",
   "scripts": {
-    "build": "concurrently \"npm run compile\" \"npm run copy-static\" ",
+    "build": "npm run compile && npm run copy-static",
     "compile": "tsc -p tsconfig.json",
     "copy-static": "cpx --clean -v \"src/**/*.{yaml,json}\" build",
     "postinstall": "npm run build",

@@ -59,8 +59,8 @@ Requirements
 $ export HEROKU_API_KEY=magical-key-only-you-know # you can also give it with the commands but this is easier for documenting purposes
 $ heroku auth:token  # will make sure you api-key works and show you heroku auth:token
 $ heroku apps --all  # if everything was okay, writing heroku should show you your apps and fetch them
-$ heroku git:remote --app payments-api # To make this README.md simple, we just push local changes to remote heroku git
-$
+$ heroku git:remote --app payments-api  # To make this README.md simple, we just push local changes to remote heroku git
+$ git push heroku master                # Pushes master branch to heroku and deploys the application instantly
 ```
 
 Note that to fully really run with Heroku, you want to setup heroku from the dashboard in a way that it syncs everything from your own github. But for the sake of "how do I get this running", this seems to be the shortest and easiest path to understand.
