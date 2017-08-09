@@ -33,6 +33,9 @@ process.on('uncaughtException', (error: any) => {
 app.use(bodyParser.json())
 // - who tought this was a good idea? REALLY? If this is not disabled, we are opening additional attack windows by telling what we're running on top of
 app.disable('x-powered-by')
+// This will display the actual swagger gui for easier testing purposes
+const apiUiDocumentPath = '/api'
+app.use(apiUiDocumentPath, swaggerUi.serve, swaggerUi.setup(swaggerApiSpecification))
 
 swaggerMiddleware.create(config, (error: Error, swaggerExpress: { register: (application: express.Application) => void }) => {
   if (error) {
@@ -41,9 +44,8 @@ swaggerMiddleware.create(config, (error: Error, swaggerExpress: { register: (app
 
   // install middleware
   swaggerExpress.register(app)
-
-  // This will display the actual swagger gui for easier testing purposes
-  app.get('/', swaggerUi.server, swaggerUi.setup(swaggerApiSpecification))
+  // Making sure root gets redirected to swagger, place the swagger middleware on root directly and it'll eat all uris
+  app.get('/',  (_: express.Request, response: express.Response) => response.redirect(apiUiDocumentPath))
 
   // Ping api will not be listed in the public swagger documentation.
   // It will be available to everyone, but it's not listed as it's mainly used by monitoring services but if someone discovers it and starts using it, no harm done.

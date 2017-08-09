@@ -13,7 +13,7 @@ info:
     url: https://opensource.org/licenses/MIT
 
 # during dev, should point to your local machine
-host: localhost:3002
+# host: localhost:3002
 # basePath prefixes all resource paths
 basePath: /
 #
