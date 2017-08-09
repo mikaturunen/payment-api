@@ -1,4 +1,23 @@
 
+import * as swaggerMiddleware from 'swagger-express-mw'
+import * as express from 'express'
+import * as bunyan from 'bunyan'
+import * as bodyParser from 'body-parser'
+import * as swaggerUi from 'swagger-ui-express'
+
+import pong from './api/controllers/ping'
+
+const swaggerApiSpecification = require('./api/swagger/swagger-from-yaml.json')
+
+const config = {
+  appRoot: __dirname // required config
+};
+
+const port = process.env['PORT'] ? process.env['PORT'] : 3002
+const log = bunyan.createLogger({ name: 'api' })
+const app = express()
+const IN_PRODUCTION = 'production'
+
 process.on('uncaughtException', (error: any) => {
   if (log !== undefined) {
     // if we have logging capacity present when the app crahes, write error log
@@ -10,20 +29,6 @@ process.on('uncaughtException', (error: any) => {
   process.exit(-1)
 })
 
-import * as swaggerMiddleware from 'swagger-express-mw'
-import * as express from 'express'
-import * as bunyan from 'bunyan'
-import * as bodyParser from 'body-parser'
-import pong from './api/controllers/ping'
-
-const config = {
-  appRoot: __dirname // required config
-};
-
-const port = process.env['PORT'] ? process.env['PORT'] : 3002
-const log = bunyan.createLogger({ name: 'api' })
-const app = express()
-const IN_PRODUCTION = 'production'
 
 app.use(bodyParser.json())
 // - who tought this was a good idea? REALLY? If this is not disabled, we are opening additional attack windows by telling what we're running on top of
@@ -36,6 +41,9 @@ swaggerMiddleware.create(config, (error: Error, swaggerExpress: { register: (app
 
   // install middleware
   swaggerExpress.register(app)
+
+  // This will display the actual swagger gui for easier testing purposes
+  app.get('/', swaggerUi.server, swaggerUi.setup(swaggerApiSpecification))
 
   // Ping api will not be listed in the public swagger documentation.
   // It will be available to everyone, but it's not listed as it's mainly used by monitoring services but if someone discovers it and starts using it, no harm done.
