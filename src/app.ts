@@ -49,7 +49,7 @@ swaggerMiddleware.create(config, (error: Error, swaggerExpress: { register: (app
 
   app.listen(port, _ => {
     log.info(`API overlay listening on port ${port}!`)
-    log.info(`Running in ${process.env['NODE_ENV'] === 'production' ? 'production' : 'development'} mode.`)
+    log.info(`Running in ${process.env['NODE_ENV'] === IN_PRODUCTION ? IN_PRODUCTION : 'development'} mode.`)
   })
 })
 
