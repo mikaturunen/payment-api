@@ -64,6 +64,9 @@ paths:
       responses:
         "200":
           description: Success
+      externalDocs:
+        description: "Example of a payments-shop-in-shop.json that can be used in testing. Note that the HMAC needs to be calculated if any of the values in the body.payment changes. You can find guidance on how to calculate hmac from here: https://gist.github.com/mikaturunen/ffc1a29510b52f5e8bdb5cfd2f7d08c0"
+        url: /examples/payment-shop-in-shop.json
 
   /v1/payment/poll/single:
     x-swagger-router-controller: v1/poll
@@ -126,6 +129,7 @@ definitions:
         type: string
         minLength: 10
         example: "7FAE9FD7ED7378FF3A110DB33CCBC2D8ADEF9459DBA3EEC2F002C41E918269E6"
+        description: SHA-256 with shared secret is used to calculate the hmac and the final result is uppercased. BodyOpenPayment.payment is the object that the hmac is calculted from.
       payment:
         type: object
         $ref: "#/definitions/OpenPayment"
