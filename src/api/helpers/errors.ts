@@ -32,7 +32,14 @@ export const clientErrors = {
     http: 400,
     code: `${v2}${paymentId}003`,
     message: 'Invalid body parameters, failed property validation.'
-  }
+  },
+  stampUsed: {
+    error: <ClientError>{
+      http: 400,
+      code: `${v1}${paymentId}010`,
+      message: 'Stamps was already used by the service. Please renew stamp.'
+    }
+  },
 }
 
 // These serverErrors are errors that were caused by something on the server and not directly due to client input
