@@ -4,10 +4,13 @@ import * as express from 'express'
 import * as bunyan from 'bunyan'
 import * as bodyParser from 'body-parser'
 import * as swaggerUi from 'swagger-ui-express'
+import * as path from 'path'
+import * as YAML from 'yamljs'
 
 import pong from './api/controllers/ping'
 
-const swaggerApiSpecification = require('./api/swagger/swagger-from-yaml.json')
+const swaggerYamlPath = path.join(__dirname, './api/swagger/swagger.yaml')
+const swaggerApiSpecification = YAML.load(swaggerYamlPath)
 
 const config = {
   appRoot: __dirname // required config
@@ -34,8 +37,12 @@ app.use(bodyParser.json())
 // - who tought this was a good idea? REALLY? If this is not disabled, we are opening additional attack windows by telling what we're running on top of
 app.disable('x-powered-by')
 // This will display the actual swagger gui for easier testing purposes
-const apiUiDocumentPath = '/api'
+const apiUiDocumentPath  = '/api'
+const mocksDirectoryPath = path.join(__dirname, './api/mocks/')
+
 app.use(apiUiDocumentPath, swaggerUi.serve, swaggerUi.setup(swaggerApiSpecification))
+// Allows us to serve static files for the mock files so the swagger.yaml can use them as example references from openapi yaml
+app.use('/examples', express.static(mocksDirectoryPath))
 
 swaggerMiddleware.create(config, (error: Error, swaggerExpress: { register: (application: express.Application) => void }) => {
   if (error) {
