@@ -20,17 +20,15 @@
     "@types/serve-static": "^1.7.31",
     "body-parser": "^1.17.2",
     "bunyan": "^1.8.12",
-    "copy-webpack-plugin": "^4.0.1",
     "cpx": "^1.5.0",
     "express": "^4.15.3",
-    "locutus": "^2.0.9",
     "ramda": "^0.24.1",
     "swagger-express-mw": "^0.7.0",
     "swagger-ui-express": "^2.0.6",
     "typescript": "^2.3.4",
     "unirest": "^0.5.1",
     "xml2js": "^0.4.17",
-    "yaml-loader": "^0.5.0"
+    "yamljs": "^0.3.0"
   },
   "engines": {
     "node": ">=8.0.0",
