@@ -47,7 +47,7 @@ paths:
         "200":
           description: Success
       externalDocs:
-        description: Example of a payments.json that can be used in testing. Note that the HMAC needs to be calculated if any of the values in the body.payment changes. You can find guidance on how to calculate hmac from here: https://gist.github.com/mikaturunen/ffc1a29510b52f5e8bdb5cfd2f7d08c0
+        description: "Example of a payments.json that can be used in testing. Note that the HMAC needs to be calculated if any of the values in the body.payment changes. You can find guidance on how to calculate hmac from here: https://gist.github.com/mikaturunen/ffc1a29510b52f5e8bdb5cfd2f7d08c0"
         url: /examples/payment.json
 
   /v1/payment/open/shop-in-shop:
