@@ -82,6 +82,9 @@ paths:
       responses:
         "200":
           description: Success
+      externalDocs:
+        description: "Polls for the payment information of a single payment."
+        url: /examples/poll.json
 
   /v1/payment/poll/shop-in-shop:
     x-swagger-router-controller: v1/poll
