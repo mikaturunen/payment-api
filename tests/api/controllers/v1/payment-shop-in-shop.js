@@ -12,21 +12,6 @@ const api = '/v1/payment/open/shop-in-shop'
 
 describe('Legacy payment wrapper', () => {
   describe('POST /v1/payment/open/shop-in-shop', _ => {
-    /**
-    it('with empty payment', done => {
-      const payment = {
-      }
-
-      chai
-        .request(server)
-        .post(api)
-        .send(payment)
-        .end((error, response) => {
-          response.status.should.eql(400)
-          done()
-        })
-    })
-    **/
 
     // NOTE using the function keyword instead of the fat-arrow notation to allow this.timeout usage
     it('with a valid payment', function(done) {

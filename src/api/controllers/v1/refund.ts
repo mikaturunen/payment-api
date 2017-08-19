@@ -21,8 +21,7 @@ const prepareRefund = (merchantId: string, merchantSecret: string, clientHmac: s
     reject: (errro: any) => void
   ) => {
 
-  const clientHmac = calculateHmac<Refund>(merchantSecret, refund)
-  if (!isHmacValid(clientHmac, merchantSecret, refund)) {
+  if (!isHmacValid<Refund>(clientHmac, merchantSecret, refund)) {
     // TODO start using same validation for all APIs that take in the property validators after the hmac as parameters
     log.warn(`Hmac validation for ${merchantId} failed in refund. Incorrect hmac was: ${clientHmac}.`)
     reject(clientErrors.hmac)
