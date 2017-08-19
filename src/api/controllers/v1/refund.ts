@@ -2,6 +2,7 @@
 import { ClientError, PaymentWall, Refund } from '../../../types'
 import { clientErrors, serverErrors } from '../../helpers/errors'
 import transformLegacyXmlToJson from '../../helpers/transform-legacy-xml-to-json'
+import { isHmacValid, calculateHmac } from '../../helpers/hmac'
 
 import * as express from 'express'
 import * as crypto from 'crypto'
@@ -20,17 +21,8 @@ const prepareRefund = (merchantId: string, merchantSecret: string, clientHmac: s
     reject: (errro: any) => void
   ) => {
 
-  const isValidHmac = (clientHmac: string, merchantSecret: string, payload: any) => {
-    const calculatedHmac = crypto
-      .createHmac('sha256', merchantSecret)
-      .update(new Buffer(JSON.stringify(payload)).toString('base64'))
-      .digest('hex')
-      .toUpperCase()
-
-    return clientHmac === calculatedHmac
-  }
-
-  if (!isValidHmac(clientHmac, merchantSecret, refund)) {
+  const clientHmac = calculateHmac<Refund>(merchantSecret, refund)
+  if (!isHmacValid(clientHmac, merchantSecret, refund)) {
     // TODO start using same validation for all APIs that take in the property validators after the hmac as parameters
     log.warn(`Hmac validation for ${merchantId} failed in refund. Incorrect hmac was: ${clientHmac}.`)
     reject(clientErrors.hmac)

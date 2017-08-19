@@ -4,7 +4,7 @@ import * as crypto from 'crypto'
 import { OpenPayment, PaymentSet, ClientError } from '../../types'
 import { clientErrors, serverErrors } from './errors'
 import { validateProperties } from './property-validators'
-import isHmacValid from './hmac-validator'
+import { isHmacValid } from './hmac'
 
 const log = bunyan.createLogger({ name: 'api-payment-preparation' })
 

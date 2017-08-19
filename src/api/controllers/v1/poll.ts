@@ -2,7 +2,7 @@
 import { Poll, ClientError, PaymentWall } from '../../../types'
 import { clientErrors, serverErrors } from '../../helpers/errors'
 import transformLegacyXmlToJson from '../../helpers/transform-legacy-xml-to-json'
-import isHmacValid from '../../helpers/hmac-validator'
+import { isHmacValid } from '../../helpers/hmac'
 import toValueString from '../../helpers/value-stringifier'
 
 import * as express from 'express'
