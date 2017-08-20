@@ -46,6 +46,40 @@ paths:
       responses:
         "200":
           description: Success
+        "400":
+          description: "Bad request, check the content you sent to server. 'ClientError.code' has detailed error code information on what happened and what went wrong. Example lists all the possible errors, separated with comma."
+          examples:
+            application/json: |
+              {
+                "http": 400,
+                "code": "11001",
+                "message": "Amount is not allowed to be 0 or less."
+              },
+              {
+                "http": 400,
+                "code": "11000",
+                "message": "General error from v1 that has not been configured into overlay yet. Check rawError for details."
+              },
+              {
+                "http": 400,
+                "code": "21001",
+                "message": "Incorrectly calculated HMAC."
+              },
+              {
+                "http": 400,
+                "code": "21002",
+                "message": "Invalid body parameters, failed property validation."
+              },
+              {
+                "http": 400,
+                "code": "12010",
+                "message": "Stamps was already used by the service. Please renew stamp."
+              }
+          schema:
+            $ref: "#/definitions/ClientError"
+
+
+
       externalDocs:
         description: "Example of a payments.json that can be used in testing. Note that the HMAC needs to be calculated if any of the values in the body.payment changes. You can find guidance on how to calculate hmac from here: https://gist.github.com/mikaturunen/ffc1a29510b52f5e8bdb5cfd2f7d08c0"
         url: /examples/payment.json
@@ -413,3 +447,16 @@ definitions:
         maxLength: 100
         minLength: 5
         example: "Varastokatu 3"
+
+  ClientError:
+    properties:
+      code:
+        type: string
+        example: 10001
+      http:
+        type: integer
+        format: int32
+        example: 400
+      message:
+        type: string
+        example: "Something went wrong."
